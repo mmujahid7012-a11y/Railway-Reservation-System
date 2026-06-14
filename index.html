@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LocoPass - Book your train tickets easily online with real-time reservation tracking.">
+    <title>LocoPass - Railway Reservation System</title>
+    <!-- Linking external custom stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="user-page">
+
+    <!-- Header Navigation Section -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo-group" id="logo-link">
+                <span class="logo-icon">🚄</span>
+                <span class="logo-text">Loco<span>Pass</span></span>
+            </a>
+            <nav aria-label="Main Navigation">
+                <ul>
+                    <li><a href="index.html" class="active" id="nav-home">Book Tickets</a></li>
+                    <li><a href="admin.html" id="nav-admin">Admin Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <div class="user-layout">
+            
+            <!-- Left Column: Reservation Form Section -->
+            <section class="glass-panel" aria-labelledby="form-heading">
+                <h2 id="form-heading" class="form-title">Reserve Seats</h2>
+                
+                <!-- Ticket Reservation Form -->
+                <form id="reservation-form" novalidate>
+                    <div class="form-grid">
+                        
+                        <!-- Passenger Name Field -->
+                        <div class="form-group full-width">
+                            <label for="passengerName">Passenger Name</label>
+                            <input type="text" id="passengerName" name="passengerName" placeholder="Enter full name" required>
+                            <span id="name-error" class="error-message" aria-live="polite"></span>
+                        </div>
+                        
+                        <!-- Email Field -->
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="name@email.com" required>
+                            <span id="email-error" class="error-message" aria-live="polite"></span>
+                        </div>
+                        
+                        <!-- Phone Number Field -->
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="03001234567" required>
+                            <span id="phone-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Train Select Dropdown -->
+                        <div class="form-group full-width">
+                            <label for="trainName">Select Train</label>
+                            <select id="trainName" name="trainName" required>
+                                <option value="">-- Choose Train --</option>
+                                <option value="Green Line Express">Green Line Express (Lahore ⇄ Karachi)</option>
+                                <option value="Karakoram Express">Karakoram Express (Karachi ⇄ Lahore)</option>
+                                <option value="Tezgam Express">Tezgam Express (Rawalpindi ⇄ Karachi)</option>
+                                <option value="Shalimar Express">Shalimar Express (Lahore ⇄ Multan)</option>
+                                <option value="Jaffar Express">Jaffar Express (Peshawar ⇄ Quetta)</option>
+                            </select>
+                            <span id="train-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Source Station Field -->
+                        <div class="form-group">
+                            <label for="source">Source City</label>
+                            <select id="source" name="source" required>
+                                <option value="">-- Station A --</option>
+                                <option value="Lahore">Lahore</option>
+                                <option value="Karachi">Karachi</option>
+                                <option value="Islamabad">Islamabad</option>
+                                <option value="Rawalpindi">Rawalpindi</option>
+                                <option value="Peshawar">Peshawar</option>
+                                <option value="Quetta">Quetta</option>
+                                <option value="Multan">Multan</option>
+                            </select>
+                            <span id="source-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Destination Station Field -->
+                        <div class="form-group">
+                            <label for="destination">Destination City</label>
+                            <select id="destination" name="destination" required>
+                                <option value="">-- Station B --</option>
+                                <option value="Lahore">Lahore</option>
+                                <option value="Karachi">Karachi</option>
+                                <option value="Islamabad">Islamabad</option>
+                                <option value="Rawalpindi">Rawalpindi</option>
+                                <option value="Peshawar">Peshawar</option>
+                                <option value="Quetta">Quetta</option>
+                                <option value="Multan">Multan</option>
+                            </select>
+                            <span id="destination-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Travel Date Field -->
+                        <div class="form-group">
+                            <label for="travelDate">Travel Date</label>
+                            <input type="date" id="travelDate" name="travelDate" required>
+                            <span id="date-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Seat Class Selection -->
+                        <div class="form-group">
+                            <label for="seatClass">Seat Class</label>
+                            <select id="seatClass" name="seatClass" required>
+                                <option value="">-- Choose Class --</option>
+                                <option value="Economy">Economy Class</option>
+                                <option value="AC Standard">AC Standard</option>
+                                <option value="AC Business">AC Business</option>
+                                <option value="First Class Sleeper">First Class Sleeper</option>
+                            </select>
+                            <span id="class-error" class="error-message" aria-live="polite"></span>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Live Price Widget -->
+                    <div class="price-display-wrapper">
+                        <span class="price-display-label">Estimated Fare:</span>
+                        <span class="price-display-value" id="estimated-price">Rs. 0</span>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" id="submit-booking-btn">
+                            Book Reservation
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Right Column: Filtering & Reservations List -->
+            <section aria-labelledby="reservations-heading">
+                <div class="glass-panel">
+                    <h2 id="reservations-heading" class="form-title" style="margin-bottom: 1.5rem;">Search & Bookings</h2>
+                    
+                    <!-- Search Filters Row -->
+                    <div class="filters-panel">
+                        <div class="form-group">
+                            <label for="filter-train">Filter by Train</label>
+                            <select id="filter-train">
+                                <option value="">All Trains</option>
+                                <option value="Green Line Express">Green Line Express</option>
+                                <option value="Karakoram Express">Karakoram Express</option>
+                                <option value="Tezgam Express">Tezgam Express</option>
+                                <option value="Shalimar Express">Shalimar Express</option>
+                                <option value="Jaffar Express">Jaffar Express</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filter-source">Filter by Source</label>
+                            <select id="filter-source">
+                                <option value="">All Sources</option>
+                                <option value="Lahore">Lahore</option>
+                                <option value="Karachi">Karachi</option>
+                                <option value="Islamabad">Islamabad</option>
+                                <option value="Rawalpindi">Rawalpindi</option>
+                                <option value="Peshawar">Peshawar</option>
+                                <option value="Quetta">Quetta</option>
+                                <option value="Multan">Multan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filter-destination">Filter by Destination</label>
+                            <select id="filter-destination">
+                                <option value="">All Destinations</option>
+                                <option value="Lahore">Lahore</option>
+                                <option value="Karachi">Karachi</option>
+                                <option value="Islamabad">Islamabad</option>
+                                <option value="Rawalpindi">Rawalpindi</option>
+                                <option value="Peshawar">Peshawar</option>
+                                <option value="Quetta">Quetta</option>
+                                <option value="Multan">Multan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filter-status">Filter by Status</label>
+                            <select id="filter-status">
+                                <option value="">All Statuses</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Render Targets: Loaders, Errors, Cards -->
+                    <div id="loading-state" class="loading-indicator" style="display: none;">
+                        <div class="spinner"></div>
+                        <p id="loading-text">Loading reservations...</p>
+                    </div>
+
+                    <div id="error-state" class="error-state-card" style="display: none;">
+                        <span class="error-state-icon">⚠</span>
+                        <h3>Connection Failed</h3>
+                        <p id="error-text">Unable to connect to server.</p>
+                        <button class="btn btn-secondary btn-sm" id="retry-btn">Retry Connection</button>
+                    </div>
+
+                    <div id="reservations-list" class="reservations-container">
+                        <!-- Reservation cards populated dynamically via JS -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+        <p>&copy; 2026 LocoPass. Created for Web Technologies Capstone. All rights reserved.</p>
+    </footer>
+
+    <!-- Plain JavaScript File -->
+    <script src="app.js"></script>
+</body>
+</html>
