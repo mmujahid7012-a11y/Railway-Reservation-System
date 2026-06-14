@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LocoPass Admin Dashboard - Manage bookings, analyze statistics, edit reservations, and coordinate operations.">
+    <title>LocoPass - Admin Dashboard</title>
+    <!-- Linking shared custom stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-page">
+
+    <!-- Header Navigation Section -->
+    <header>
+        <div class="nav-container">
+            <a href="admin.html" class="logo-group" id="admin-logo-link">
+                <span class="logo-icon">⚙️</span>
+                <span class="logo-text">Loco<span>Admin</span></span>
+            </a>
+            <nav aria-label="Administrative Navigation">
+                <ul>
+                    <li><a href="index.html" id="nav-book">Book Tickets</a></li>
+                    <li><a href="admin.html" class="active" id="nav-dashboard">Admin Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <div class="admin-section">
+            
+            <!-- Dashboard Stats Summary Widgets -->
+            <section class="stats-grid" aria-label="Summary Statistics">
+                
+                <!-- Stat Card 1: Total Bookings -->
+                <div class="stat-card" id="stat-total-reservations">
+                    <div class="stat-icon" aria-hidden="true">📊</div>
+                    <div class="stat-info">
+                        <span class="stat-title">Total Reservations</span>
+                        <span class="stat-value" id="stats-total">0</span>
+                    </div>
+                </div>
+
+                <!-- Stat Card 2: Confirmed Bookings -->
+                <div class="stat-card" id="stat-confirmed-tickets">
+                    <div class="stat-icon" style="background-color: rgba(16, 185, 129, 0.15); color: #10b981;" aria-hidden="true">✅</div>
+                    <div class="stat-info">
+                        <span class="stat-title">Confirmed Tickets</span>
+                        <span class="stat-value" id="stats-confirmed">0</span>
+                    </div>
+                </div>
+
+                <!-- Stat Card 3: Average Ticket Price -->
+                <div class="stat-card" id="stat-average-price">
+                    <div class="stat-icon" style="background-color: rgba(245, 158, 11, 0.15); color: #f59e0b;" aria-hidden="true">💰</div>
+                    <div class="stat-info">
+                        <span class="stat-title">Avg Ticket Price</span>
+                        <span class="stat-value" id="stats-average">Rs. 0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Editing Form Panel (Drawer style - displayed when editing) -->
+            <section id="edit-drawer-panel" class="glass-panel edit-drawer" aria-labelledby="edit-heading">
+                <div class="edit-drawer-header">
+                    <h3 id="edit-heading" class="edit-drawer-title">Modify Reservation</h3>
+                    <button class="btn btn-secondary btn-sm" id="cancel-edit-btn" type="button">Close Panel</button>
+                </div>
+                
+                <!-- Admin Edit Form -->
+                <form id="edit-reservation-form" novalidate>
+                    <!-- Track active reservation ID internally -->
+                    <input type="hidden" id="edit-res-id" name="id">
+
+                    <div class="form-grid">
+                        
+                        <!-- Passenger Name Field -->
+                        <div class="form-group">
+                            <label for="editPassengerName">Passenger Name</label>
+                            <input type="text" id="editPassengerName" name="passengerName" placeholder="Enter name" required>
+                            <span id="edit-name-error" class="error-message" aria-live="polite"></span>
+                        </div>
+                        
+                        <!-- Email Field -->
+                        <div class="form-group">
+                            <label for="editEmail">Email Address</label>
+                            <input type="email" id="editEmail" name="email" placeholder="name@email.com" required>
+                            <span id="edit-email-error" class="error-message" aria-live="polite"></span>
+                        </div>
+                        
+                        <!-- Phone Number Field -->
+                        <div class="form-group">
+                            <label for="editPhone">Phone Number</label>
+                            <input type="tel" id="editPhone" name="phone" placeholder="03001234567" required>
+                            <span id="edit-phone-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Train Selection Field -->
+                        <div class="form-group">
+                            <label for="editTrainName">Select Train</label>
+                            <select id="editTrainName" name="trainName" required>
+                                <option value="">-- Choose Train --</option>
+                                <option value="Green Line Express">Green Line Express</option>
+                                <option value="Karakoram Express">Karakoram Express</option>
+                                <option value="Tezgam Express">Tezgam Express</option>
+                                <option value="Shalimar Express">Shalimar Express</option>
+                                <option value="Jaffar Express">Jaffar Express</option>
+                            </select>
+                            <span id="edit-train-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Source Station -->
+                        <div class="form-group">
+                            <label for="editSource">Source Station</label>
+                            <select id="editSource" name="source" required>
+                                <option value="">-- Choose Station --</option>
+                                <option value="Lahore">Lahore</option>
+                                <option value="Karachi">Karachi</option>
+                                <option value="Islamabad">Islamabad</option>
+                                <option value="Rawalpindi">Rawalpindi</option>
+                                <option value="Peshawar">Peshawar</option>
+                                <option value="Quetta">Quetta</option>
+                                <option value="Multan">Multan</option>
+                            </select>
+                            <span id="edit-source-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Destination Station -->
+                        <div class="form-group">
+                            <label for="editDestination">Destination Station</label>
+                            <select id="editDestination" name="destination" required>
+                                <option value="">-- Choose Station --</option>
+                                <option value="Lahore">Lahore</option>
+                                <option value="Karachi">Karachi</option>
+                                <option value="Islamabad">Islamabad</option>
+                                <option value="Rawalpindi">Rawalpindi</option>
+                                <option value="Peshawar">Peshawar</option>
+                                <option value="Quetta">Quetta</option>
+                                <option value="Multan">Multan</option>
+                            </select>
+                            <span id="edit-destination-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Travel Date -->
+                        <div class="form-group">
+                            <label for="editTravelDate">Travel Date</label>
+                            <input type="date" id="editTravelDate" name="travelDate" required>
+                            <span id="edit-date-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Seat Class -->
+                        <div class="form-group">
+                            <label for="editSeatClass">Seat Class</label>
+                            <select id="editSeatClass" name="seatClass" required>
+                                <option value="">-- Choose Class --</option>
+                                <option value="Economy">Economy Class</option>
+                                <option value="AC Standard">AC Standard</option>
+                                <option value="AC Business">AC Business</option>
+                                <option value="First Class Sleeper">First Class Sleeper</option>
+                            </select>
+                            <span id="edit-class-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Ticket Price -->
+                        <div class="form-group">
+                            <label for="editTicketPrice">Ticket Price (Rs.)</label>
+                            <input type="number" id="editTicketPrice" name="ticketPrice" min="0" placeholder="Price" required>
+                            <span id="edit-price-error" class="error-message" aria-live="polite"></span>
+                        </div>
+
+                        <!-- Ticket Status -->
+                        <div class="form-group">
+                            <label for="editStatus">Booking Status</label>
+                            <select id="editStatus" name="status" required>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                            <span id="edit-status-error" class="error-message" aria-live="polite"></span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-secondary" id="discard-edit-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="save-edit-btn">Save Changes</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Table Section (Database Grid) -->
+            <section class="glass-panel" aria-labelledby="grid-heading">
+                <div class="admin-actions-bar">
+                    <h2 id="grid-heading" class="admin-title">ADMIN <span>DASHBOARD</span></h2>
+                    <!-- Mini Search/Filter Row -->
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <select id="admin-filter-status" style="width: auto; padding: 0.5rem 1rem;">
+                            <option value="">All Statuses</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Loaders & Error states -->
+                <div id="admin-loading-state" class="loading-indicator" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Loading reservations...</p>
+                </div>
+
+                <div id="admin-error-state" class="error-state-card" style="display: none;">
+                    <span class="error-state-icon">⚠</span>
+                    <h3>Database Error</h3>
+                    <p>Unable to connect to server.</p>
+                    <button class="btn btn-secondary btn-sm" id="admin-retry-btn">Retry Database Connection</button>
+                </div>
+
+                <!-- Table Grid -->
+                <div class="table-wrapper" id="admin-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Passenger Details</th>
+                                <th scope="col">Train</th>
+                                <th scope="col">Route</th>
+                                <th scope="col">Travel Date</th>
+                                <th scope="col">Class</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-reservations-table-body">
+                            <!-- Populated dynamically via admin.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2026 LocoPass. Administrator Console. All rights reserved.</p>
+    </footer>
+
+    <!-- Plain JavaScript File -->
+    <script src="admin.js"></script>
+</body>
+</html>
