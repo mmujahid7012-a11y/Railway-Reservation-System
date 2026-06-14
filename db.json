@@ -1,0 +1,57 @@
+{
+  "reservations": [
+    {
+      "id": "1",
+      "passengerName": "Ali Khan",
+      "email": "ali@gmail.com",
+      "phone": "03001234567",
+      "trainName": "Green Line Express",
+      "source": "Lahore",
+      "destination": "Karachi",
+      "travelDate": "2026-06-20",
+      "seatClass": "Economy",
+      "ticketPrice": 3500,
+      "status": "Confirmed"
+    },
+    {
+      "id": "2",
+      "passengerName": "Sana Ahmed",
+      "email": "sana@gmail.com",
+      "phone": "03119876543",
+      "trainName": "Karakoram Express",
+      "source": "Karachi",
+      "destination": "Lahore",
+      "travelDate": "2026-06-25",
+      "seatClass": "AC Business",
+      "ticketPrice": 6500,
+      "status": "Confirmed"
+    },
+    {
+      "id": "3",
+      "passengerName": "Bilal Siddiqui",
+      "email": "bilal@gmail.com",
+      "phone": "03215551234",
+      "trainName": "Tezgam Express",
+      "source": "Rawalpindi",
+      "destination": "Multan",
+      "travelDate": "2026-06-28",
+      "seatClass": "AC Standard",
+      "ticketPrice": 4200,
+      "status": "Pending"
+    },
+    {
+      "passengerName": "KHAN",
+      "email": "mmujahid34551@gmail.com",
+      "phone": "03098641219",
+      "trainName": "Green Line Express",
+      "source": "Multan",
+      "destination": "Peshawar",
+      "travelDate": "2026-06-07",
+      "seatClass": "Economy",
+      "ticketPrice": 2000,
+      "status": "Confirmed",
+      "id": "2pDODE99EHE"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
